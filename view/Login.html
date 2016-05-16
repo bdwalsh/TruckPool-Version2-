@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Alexis Final Project</title>
+    <meta charset="utf-8"/>
+      <link href="../css/Alexis_Main_CSS.css" rel="stylesheet" type="text/css">
+      <style>
+          #h2{
+            text-align: center;
+            font-family:"Helvetica Neue", Gotham, Helvetica, Arial, sans-serif; 
+          }
+            
+          body {
+            text-align: center;
+          }
+      </style>
+    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<body>
+    
+    <a href="UpdatePassword.html">Profile</a>
+    <a href="ImageUpload.html">Upload Item</a>
+    <a href="UserImages.html">Your Items</a>
+    <a href="AllImages.html">All Images</a>
+    <a href="UserComments.html">Your/Saved Comments</a>
+    <a href="Favorites.html">Your Favourites</a>
+    <a href="../index.html">Logout</a>
+    
+    <select>
+        <option value="small">Small</option>
+        <option value="medium">Medium</option>
+        <option value="large">Large</option>
+    </select>
+    <button id ="search">Search</button>
+    <br><br><br>
+    
+    <h2 id="h2"> Welcome to TruckPool! Where you can find all of your hauling, moving and towing needs!</h2>
+    <div id="display"></div>
+    
+    
+</body>
+    <script>
+        
+        $(document).ready(function(){
+            alert("Welcome " + localStorage.getItem("user_username") + "!");
+            $.ajax({
+                url:"../controller/ImageCont.php",
+                dataType:"html",
+                type:"POST",
+                data:{
+                    method:"display_all",
+                },
+                success:function(resp){
+                    console.log(JSON.parse(resp));
+                    var gallery = JSON.parse(resp);
+                    for(var i = 0; i<gallery.length;i++){
+                        var img = document.createElement("img");
+                        img.src = gallery[i].path;
+                        img.style.height = "150px";
+                        img.style.width = "auto";
+                        var div = document.createElement("div");
+                        div.style.border = "solid";
+                        div.style.width = "500px";
+                        div.style.marginBottom = "10px";
+                        div.style.padding = "10px";
+                        div.style.marginRight = "auto";
+                        div.style.marginLeft = "auto";
+                        div.style.textAlign = "center";
+                        document.getElementById("display").appendChild(div);
+                        
+                        
+                        
+                        var h = document.createElement("h2");
+                        h.innerHTML = gallery[i].title;
+                        console.log(gallery[i].title);
+                        
+                        div.appendChild(h);
+                        div.appendChild(img);
+                
+                        var brk = document.createElement("br");
+                        div.appendChild(brk);
+             
+                        
+                        var DisplayDiv = document.createElement("div");
+                        DisplayDiv.setAttribute("id", "DisplayDivComment" + gallery[i].id);
+                        div.appendChild(DisplayDiv);
+                        
+                        
+                        var see = document.createElement("button");
+                        see.innerHTML = "View Entire Ad";
+                        div.appendChild(see);
+                         see.id = gallery[i].id;
+                        
+                        see.onclick = function(){
+                           
+                          var seeId = this.id;
+                            console.log(seeId);
+                            localStorage.setItem("adId", seeId);
+                            location.href = "SingleItem.html";
+                        }
+                
+                    }
+                }
+            });
+
+  
+            
+        });
+        
+         var AddComment = function(id){
+                            console.log(document.getElementById("CommentInput" + id).value);
+                            //alert("click");
+            
+                            $.ajax({
+                                url:"../controller/CommentCont.php",
+                                dataType:"json",
+                                type:"POST",
+                                data:{
+                                    method:"insert",
+                                    imageId: id,
+                                    comment:document.getElementById("CommentInput" + id).value,
+                                    userId: localStorage.getItem("user_id")
+                                    
+                                    
+                                },
+                                success:function(resp){
+                                    console.log(resp);
+                                    alert("Comment successfully posted!");
+                                    location.reload();
+                                    }
+                                });
+            
+            
+                            }
+        
+        var ShowComments = function(id){
+                            $.ajax({
+                                url:"../controller/CommentCont.php",
+                                dataType:"html",
+                                type:"POST",
+                                data:{
+                                    method:"display",
+                                    imageId: id
+                                },
+                                success:function(resp){
+                                    console.log(JSON.parse(resp));
+                                    var gallery2 = JSON.parse(resp);
+                                    for(var i = 0; i<gallery2.length;i++){
+
+                                        var pComment = document.createElement("p");
+                                        pComment.innerHTML = gallery2[i].text;
+                                        document.getElementById("DisplayDivComment" + id).appendChild(pComment);
+                                        
+                                        
+                                    }
+                                }
+                            });
+                        }
+    
+    </script>
+</html>

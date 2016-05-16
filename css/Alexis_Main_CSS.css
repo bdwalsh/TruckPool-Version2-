@@ -1,0 +1,25 @@
+a, h2, p {
+		font-family:"Helvetica Neue", Gotham, Helvetica, Arial, sans-serif;
+        margin-left: 10px;
+}
+
+input {
+    height: 30px;
+    width: 200px;
+}
+
+button {
+    border: none;
+    height: 35px;
+    width: auto;
+    background-color: #2c4491;
+    color: white;
+}
+
+#DeleteBut {
+    background-color: #912c2c;
+}
+
+#ShowCommentsBut {
+    background-color: #2c9146;
+}

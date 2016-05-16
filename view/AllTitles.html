@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Alexis Final Project</title>
+    <meta charset="utf-8"/>
+    <link href="../css/Alexis_Main_CSS.css" rel="stylesheet" type="text/css">
+    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<body>
+    <a href="Login.html">Back to Login</a><br></br>
+    <div id="display"></div>
+</body>
+    
+<script>
+ $(document).ready(function(){
+                $.ajax({
+                    url:"../controller/ImageCont.php",
+                    dataType:"html",
+                    type:"POST",
+                    data:{
+                        method:"display_titles",
+                    },
+                    success:function(resp){
+                        console.log(JSON.parse(resp));
+                        var gallery = JSON.parse(resp);
+                        for(var i = 0; i<gallery.length;i++){
+                        
+                            var h = document.createElement("h2");
+                            h.innerHTML = gallery[i].title;
+                            console.log(gallery[i].title);
+                            document.getElementById("display").appendChild(h);
+                        }
+                    }
+                });
+           
+            
+        });
+</script>
+    
+</html>

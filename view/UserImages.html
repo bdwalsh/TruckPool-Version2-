@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Alexis Final Project</title>
+    <meta charset="utf-8"/>
+    <link href="../css/Alexis_Main_CSS.css" rel="stylesheet" type="text/css">
+    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<body>
+    <a href="Login.html">Back to Login</a><br></br>
+    <div id="display"></div>
+</body>
+    
+    <script>
+        var deletePic = function(id){
+                                console.log(id);
+                                
+                            $.ajax({
+                                url:"../controller/imageCont.php",
+                                dataType:"json",
+                                type:"POST",
+                                data:{
+                                    method:"delete",
+                                    imageId: id
+                                    
+                                },
+                                success:function(resp){
+                                    console.log(resp);
+                                    alert("Image successfully deleted!");
+                                    location.reload();
+                                    }
+                                });
+            
+                            }
+        
+        var updateTitle = function(id){
+                            console.log(document.getElementById("EditTitleInput" + id).value);
+                            $.ajax({
+                                url:"../controller/ImageCont.php",
+                                dataType:"json",
+                                type:"POST",
+                                data:{
+                                    method:"update_image_title",
+                                    imageId: id,
+                                    title:document.getElementById("EditTitleInput" + id).value
+                                    
+                                },
+                                success:function(resp){
+                                    console.log(resp);
+                                    alert("Title successfully updated!");
+                                    location.reload();
+                                    }
+                                });
+            
+            
+                            }
+        
+        var updateDescription = function(id){
+                            console.log(document.getElementById("EditDescriptionInput" + id).value);
+                            $.ajax({
+                                url:"../controller/ImageCont.php",
+                                dataType:"json",
+                                type:"POST",
+                                data:{
+                                    method:"update_image_description",
+                                    imageId: id,
+                                    description:document.getElementById("EditDescriptionInput" + id).value
+                                    
+                                },
+                                success:function(resp){
+                                    console.log(resp);
+                                    alert("Description successfully updated!");
+                                    location.reload();
+                                    }
+                                });
+            
+            
+                            }
+        
+        $(document).ready(function(){
+            
+            
+
+            $.ajax({
+                url:"../controller/ImageCont.php",
+                dataType:"html",
+                type:"POST",
+                data:{
+                    method:"display",
+                    user_id:localStorage.getItem("user_id")
+                    //take this out ^ for all images page
+                },
+                success:function(resp){
+                    console.log(JSON.parse(resp));
+                    var gallery = JSON.parse(resp);
+                    for(var i = 0; i<gallery.length;i++){
+                        var img = document.createElement("img");
+                        img.src = gallery[i].path;
+                        
+                        var h = document.createElement("h2");
+                        h.innerHTML = gallery[i].title;
+                        console.log(gallery[i].title);
+                        h.appendChild(img);
+                        document.getElementById("display").appendChild(h);
+                        
+                        var p = document.createElement("p");
+                        p.innerHTML = gallery[i].description;
+                        console.log(gallery[i].description);
+                        p.appendChild(img);
+                        document.getElementById("display").appendChild(p);
+                        
+                        var brk = document.createElement("br");
+                        document.getElementById("display").appendChild(brk);
+                        
+                        var editTitle = document.createElement("input");
+                        editTitle.placeholder = "Edit Title";
+                        editTitle.setAttribute("id", "EditTitleInput" + gallery[i].id);
+                        document.getElementById("display").appendChild(editTitle);
+                        
+                        var updateTitleButton = document.createElement("button");
+                        updateTitleButton.innerHTML = "Update";
+                        updateTitleButton.setAttribute("onclick","updateTitle("+gallery[i].id+")");
+                        //updateTitleButton.setAttribute("id", "UpdateTitleBut");
+                        document.getElementById("display").appendChild(updateTitleButton);
+                        
+                        var brk = document.createElement("br");
+                        document.getElementById("display").appendChild(brk);
+                        
+                        var editDescription = document.createElement("input");
+                        editDescription.placeholder = "Edit Description";
+                        editDescription.setAttribute("id", "EditDescriptionInput" + gallery[i].id);
+                        document.getElementById("display").appendChild(editDescription);
+                        
+                        var updateDescriptionButton = document.createElement("button");
+                        updateDescriptionButton.innerHTML = "Update";
+                        updateDescriptionButton.setAttribute("onclick","updateDescription("+gallery[i].id+")");
+                        //updateDescriptionButton.setAttribute("id", "UpdateDescriptionBut");
+                        document.getElementById("display").appendChild(updateDescriptionButton);
+                        
+                        var brk = document.createElement("br");
+                        document.getElementById("display").appendChild(brk);
+                        
+                        var brk = document.createElement("br");
+                        document.getElementById("display").appendChild(brk);
+                        
+                        var btn = document.createElement("button");
+                        btn.innerHTML = "Delete";
+                        btn.setAttribute("id", "DeleteBut");
+                        btn.setAttribute("onclick","deletePic("+gallery[i].id+")");
+                        document.getElementById("display").appendChild(btn);
+                        
+                        var brk = document.createElement("br");
+                        document.getElementById("display").appendChild(brk);
+                        
+                        var brk = document.createElement("br");
+                        document.getElementById("display").appendChild(brk);
+                        
+                        var brk = document.createElement("br");
+                        document.getElementById("display").appendChild(brk);
+                        
+                       /*     document.getElementById("DeleteBut").onclick = function(){
+                                console.log(this.getAttribute("imageID"));
+                                
+                            $.ajax({
+                                url:"../controller/imageCont.php",
+                                dataType:"json",
+                                type:"POST",
+                                data:{
+                                    method:"delete",
+                                    imageId: this.getAttribute("imageID")
+                                    
+                                },
+                                success:function(resp){
+                                    console.log(resp);
+                                    alert("Image successfully deleted!");
+                                    location.reload();
+                                    }
+                                });
+            
+                            }*/
+                            
+                            
+                        
+                    }
+                }
+            });
+        });
+        
+    </script>
+</html>

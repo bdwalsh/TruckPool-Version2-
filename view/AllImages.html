@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Alexis Final Project</title>
+    <meta charset="utf-8"/>
+    <link href="../css/Alexis_Main_CSS.css" rel="stylesheet" type="text/css">
+    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<body>
+    <a href="Login.html">Back to Login</a><br></br>
+    <div id="display"></div>
+</body>
+    
+    <script>
+        
+        var AddComment = function(id){
+                            console.log(document.getElementById("CommentInput" + id).value);
+                            //alert("click");
+            
+                            $.ajax({
+                                url:"../controller/CommentCont.php",
+                                dataType:"json",
+                                type:"POST",
+                                data:{
+                                    method:"insert",
+                                    imageId: id,
+                                    comment:document.getElementById("CommentInput" + id).value,
+                                    userId: localStorage.getItem("user_id")
+                                    
+                                    
+                                },
+                                success:function(resp){
+                                    console.log(resp);
+                                    alert("Comment successfully posted!");
+                                    location.reload();
+                                    }
+                                });
+            
+            
+                            }
+        
+        var ShowComments = function(id){
+                            $.ajax({
+                                url:"../controller/CommentCont.php",
+                                dataType:"html",
+                                type:"POST",
+                                data:{
+                                    method:"display",
+                                    imageId: id
+                                },
+                                success:function(resp){
+                                    console.log(JSON.parse(resp));
+                                    var gallery2 = JSON.parse(resp);
+                                    for(var i = 0; i<gallery2.length;i++){
+
+                                        var pComment = document.createElement("p");
+                                        pComment.innerHTML = gallery2[i].text;
+                                        document.getElementById("DisplayDivComment" + id).appendChild(pComment);
+                                        
+                                        
+                                    }
+                                }
+                            });
+                        }
+        
+        $(document).ready(function(){
+            
+            $.ajax({
+                url:"../controller/ImageCont.php",
+                dataType:"html",
+                type:"POST",
+                data:{
+                    method:"display_all",
+                },
+                success:function(resp){
+                    console.log(JSON.parse(resp));
+                    var gallery = JSON.parse(resp);
+                    for(var i = 0; i<gallery.length;i++){
+                        var img = document.createElement("img");
+                        img.src = gallery[i].path;
+                        
+                        var h = document.createElement("h2");
+                        h.innerHTML = gallery[i].title;
+                        console.log(gallery[i].title);
+                        h.appendChild(img);
+                        document.getElementById("display").appendChild(h);
+                        
+                        var p = document.createElement("p");
+                        p.innerHTML = gallery[i].description;
+                        console.log(gallery[i].description);
+                        p.appendChild(img);
+                        document.getElementById("display").appendChild(p);
+                        
+                        var brk = document.createElement("br");
+                        document.getElementById("display").appendChild(brk);
+                        
+                        var DisplayDiv = document.createElement("div");
+                        DisplayDiv.setAttribute("id", "DisplayDivComment" + gallery[i].id);
+                        document.getElementById("display").appendChild(DisplayDiv);
+                        
+                        var cmt = document.createElement("input");
+                        cmt.placeholder = "Enter your comment";
+                        cmt.setAttribute("id", "CommentInput" + gallery[i].id);
+                        document.getElementById("display").appendChild(cmt);
+                        
+                        var commentBut = document.createElement("button");
+                        commentBut.innerHTML = "Post";
+                        commentBut.setAttribute("onclick", "AddComment("+gallery[i].id+")");
+                        document.getElementById("display").appendChild(commentBut);
+                        
+                        var showBut = document.createElement("button");
+                        showBut.innerHTML = "View all";
+                        showBut.setAttribute("onclick", "ShowComments("+gallery[i].id+")");
+                        showBut.setAttribute("id", "ShowCommentsBut");
+                        document.getElementById("display").appendChild(showBut);
+                     
+                       /* document.getElementById("CommentBut").onclick = function(){
+                                
+                           alert("clicked");
+            
+            
+                            }*/
+                    }
+                }
+            });
+
+    });
+        
+    </script>
+</html>

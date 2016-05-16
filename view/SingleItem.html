@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Alexis Final Project</title>
+    <meta charset="utf-8"/>
+      <link href="../css/Alexis_Main_CSS.css" rel="stylesheet" type="text/css">
+      <style>
+          #h2{
+            text-align: center;
+            font-family:"Helvetica Neue", Gotham, Helvetica, Arial, sans-serif; 
+          }
+            
+          body {
+            text-align: center;
+          }
+      </style>
+    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<body>
+
+<script>
+$(document).ready(function(){
+    var id = localStorage.getItem("adId");
+    $.ajax({
+                url:"../controller/ImageCont.php",
+                dataType:"json",
+                type:"POST",
+                data:{
+                    method:"single_ad",
+                    id:id,
+                },
+                success:function(resp){
+                    console.log(resp);
+                     for(var i = 0; i<resp.length; i++){
+                    var imgs = document.createElement("img");
+                            imgs.src = resp[i].path;
+                            imgs.style.height = "150px";
+                            imgs.style.width = "auto";
+                            
+                            var p = document.createElement("p");
+                            p.innerHTML = "Description: " + resp[i].description;
+                            var p3 = document.createElement("p")
+                            p3.innerHTML = "Title: " + resp[i].title;
+                            var div = document.createElement("div");
+                    
+                            div.style.border = "solid";
+                            div.style.width = "500px";
+                            div.style.marginBottom = "10px";
+                            div.style.padding = "10px";
+                            div.style.marginRight = "auto";
+                            div.style.marginLeft = "auto";
+                            div.style.textAlign = "center";
+                            document.body.appendChild(div);
+                    
+                            div.appendChild(p3);
+                            div.appendChild(imgs);
+                            div.appendChild(p);
+                         
+                         
+
+                            var cmt = document.createElement("input");
+                            cmt.placeholder = "Enter your comment"; 
+                            cmt.id = "cmt";
+                            div.appendChild(cmt);
+               
+
+                            var commentBut = document.createElement("button");
+                            commentBut.innerHTML = "Post";
+                            div.appendChild(commentBut);
+
+
+                            var showBut = document.createElement("button");
+                            showBut.innerHTML = "View all";
+                            showBut.id = "ShowCommentsBut";
+                            div.appendChild(showBut);
+                            
+                         
+                            commentBut.onclick = function(){
+                                var commVal = document.getElementById("cmt").value;
+                                console.log(commVal);
+                                        $.ajax({
+                                        url:"../controller/CommentCont.php",
+                                        dataType:"json",
+                                        type:"POST",
+                                        data:{
+                                            method:"insert",
+                                            imageId: id,
+                                            comment:commVal,
+                                            userId: localStorage.getItem("user_id")
+
+
+                                        },
+                                        success:function(resp){
+                                            console.log(resp);
+                                            alert("Comment successfully posted!");
+                                            //location.reload();
+                                            }
+                                        });
+
+
+                                    }
+                            
+                                showBut.onclick = function(){
+                                     $.ajax({
+                                        url:"../controller/CommentCont.php",
+                                        dataType:"html",
+                                        type:"POST",
+                                        data:{
+                                            method:"display",
+                                            imageId: id
+                                        },
+                                        success:function(resp){
+                                            console.log(JSON.parse(resp));
+                                            var gallery2 = JSON.parse(resp);
+                                            for(var i = 0; i<gallery2.length;i++){
+
+                                                var pComment = document.createElement("p");
+                                                pComment.innerHTML = gallery2[i].text;
+                                                div.appendChild(pComment);
+
+
+                                            }
+                                        }
+                                         
+                            });
+                                
+                                
+                                }
+                            
+                            
+                            }
+                     }
+                
+    });
+});
+ 
+ 
+
+</script>
+    
+</body>
+</html>

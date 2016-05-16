@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Alexis Final Project</title>
+    <meta charset="utf-8"/>
+    <link href="css/Alexis_Main_CSS.css" rel="stylesheet" type="text/css">
+    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<body>
+    <input id = "UsernameSignUp" placeholder="Username" />
+    <input id = "PasswordSignUp" placeholder="Password" type = "password" />
+    <button id = "RegisterButton">Register</button>
+    
+    <br></br>
+    <p> Or log in here!</p>
+   
+    <input id = "UsernameLogin" placeholder="Username" />
+    <input id = "PasswordLogin" placeholder="Password" type = "password" />
+    <button id = "LoginButton">Login</button>
+    
+    <br></br>
+
+</body>
+
+<script>
+$(document).ready(function(){
+    document.getElementById("RegisterButton").onclick = function(){
+            alert("clicked");
+            //ajax
+            $.ajax({
+                url:"./controller/UserCont.php",
+                dataType:"html",
+                type:"POST",
+                data:{
+                    method:"insert",
+                    username:document.getElementById("UsernameSignUp").value,
+                    password:document.getElementById("PasswordSignUp").value
+                },
+                success:function(resp){
+                    alert("User successfully created!");
+                }
+            });
+        }
+    
+    var user_id = -1;
+            document.getElementById("LoginButton").onclick = function(){
+                $.ajax({
+                    url:"./controller/UserCont.php",
+                    dataType:"json",
+                    type:"POST",
+                    data:{
+                        method:"login",
+                        username:document.getElementById("UsernameLogin").value,
+                        password:document.getElementById("PasswordLogin").value
+                    },
+                    success:function(resp){
+                        alert("User successfully logged in!");
+                        console.log(resp);
+                        user_id = resp[0].id;
+                        sessionStorage.myid = resp[0].id;
+                        localStorage.setItem("user_id", resp[0].id);
+                        localStorage.setItem("user_username", resp[0].username);
+                        var usr = localStorage.getItem("user_username");
+                        console.log(usr);
+                       location.href = "./view/Login.html";
+                    }
+                });
+            }    
+    
+    
+    });
+</script>
+
+</html>

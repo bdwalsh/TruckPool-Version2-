@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Alexis Final Project</title>
+    <meta charset="utf-8"/>
+    <link href="../css/Alexis_Main_CSS.css" rel="stylesheet" type="text/css">
+    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<body>  
+    <a href="Login.html">Back to Login</a>
+    <div id="display"></div>
+</body>
+    
+<script>
+    var deleteComment = function(id){
+                                console.log(id);
+                                
+                            $.ajax({
+                                url:"../controller/CommentCont.php",
+                                dataType:"json",
+                                type:"POST",
+                                data:{
+                                    method:"delete",
+                                    commentId: id
+                                    
+                                },
+                                success:function(resp){
+                                    console.log(resp);
+                                    alert("Comment successfully deleted!");
+                                    location.reload();
+                                    }
+                                });
+            
+                            }
+    
+    var updateComment = function(id){
+                            console.log(document.getElementById("EditCommentInput" + id).value);
+                            $.ajax({
+                                url:"../controller/CommentCont.php",
+                                dataType:"json",
+                                type:"POST",
+                                data:{
+                                    method:"update",
+                                    commentId: id,
+                                    text:document.getElementById("EditCommentInput" + id).value
+                                    
+                                },
+                                success:function(resp){
+                                    console.log(resp);
+                                    alert("Comment successfully updated!");
+                                    location.reload();
+                                    }
+                                });
+            
+            
+                            }
+    
+    $(document).ready(function(){
+                $.ajax({
+                    url:"../controller/CommentCont.php",
+                    dataType:"html",
+                    type:"POST",
+                    data:{
+                        method:"display_comments",
+                        userId: localStorage.getItem("user_id")
+                        
+                    },
+                    success:function(resp){
+                        console.log(JSON.parse(resp));
+                        var gallery = JSON.parse(resp);
+                        for(var i = 0; i<gallery.length;i++){
+                        
+                            var pUserComment = document.createElement("p");
+                            pUserComment.innerHTML = gallery[i].text;
+                            console.log(gallery[i].text);
+                            document.getElementById("display").appendChild(pUserComment);
+                            
+                            var editComment = document.createElement("input");
+                            editComment.placeholder = "Edit your comment";
+                            editComment.setAttribute("id", "EditCommentInput" + gallery[i].id);
+                            document.getElementById("display").appendChild(editComment);
+                            
+                            var updateCommentButton = document.createElement("button");
+                            updateCommentButton.innerHTML = "Update";
+                            updateCommentButton.setAttribute("onclick","updateComment("+gallery[i].id+")");
+                            //updateDescriptionButton.setAttribute("id", "UpdateDescriptionBut");
+                            document.getElementById("display").appendChild(updateCommentButton);
+                            
+                            var deleteButton = document.createElement("button");
+                            deleteButton.innerHTML = "Delete";
+                            deleteButton.setAttribute("id", "DeleteBut");
+                            deleteButton.setAttribute("onclick","deleteComment("+gallery[i].id+")");
+                            document.getElementById("display").appendChild(deleteButton);
+                        }
+                    }
+                });
+           
+            
+        });
+</script>
+    
+</html>
