@@ -9,7 +9,23 @@
             text-align: center;
             font-family:"Helvetica Neue", Gotham, Helvetica, Arial, sans-serif; 
           }
-            
+           #fav {
+            background-color: #13293D;
+            width: 70px;
+            height: 50px;
+            margin-left: 3px;
+
+
+            }
+
+            #save {
+                background-color: #13293D;
+                width: 70px;
+                height: 50px;
+                margin-left: 3px;
+
+            }
+
           body {
             text-align: center;
           }
@@ -74,6 +90,16 @@ $(document).ready(function(){
                             showBut.id = "ShowCommentsBut";
                             div.appendChild(showBut);
                             
+                            var fav = document.createElement("button");
+                            fav.id = "fav";
+                            fav.innerHTML = "Favourite this post!";
+                            div.appendChild(fav);
+                            
+                            var save = document.createElement("button");
+                            save.innerHTML = "Save this post!";
+                            save.id = "save";
+                            div.appendChild(save);
+                     
                          
                             commentBut.onclick = function(){
                                 var commVal = document.getElementById("cmt").value;
