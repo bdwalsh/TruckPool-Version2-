@@ -40,4 +40,8 @@ if($_POST['method'] == "single_ad"){
 if($_POST['method'] == "search"){
     display_search();
 }
+
+if($_POST['method'] == "loadFavourites"){
+    load_favourites();
+}
 ?>

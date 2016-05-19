@@ -91,15 +91,39 @@ $(document).ready(function(){
                             div.appendChild(showBut);
                             
                             var fav = document.createElement("button");
-                            fav.id = "fav";
+                            fav.id = resp[i].id;
                             fav.innerHTML = "Favourite this post!";
                             div.appendChild(fav);
+                         
                             
                             var save = document.createElement("button");
                             save.innerHTML = "Save this post!";
                             save.id = "save";
                             div.appendChild(save);
-                     
+                            
+                            fav.onclick = function() {
+                                alert("favourited");
+                                console.log(this.id);
+                                console.log(localStorage.getItem("user_id"));
+                                $.ajax({
+                                        url:"../controller/CommentCont.php",
+                                        dataType:"json",
+                                        type:"POST",
+                                        data:{
+                                            method:"favourite",
+                                            imageId: this.id,
+                                            userId: localStorage.getItem("user_id")
+
+
+                                        },
+                                        success:function(resp){
+                                            console.log(resp);
+                                            alert("Comment successfully favourited!");
+                                            //location.reload();
+                                            }
+                                        });
+                              }
+                            
                          
                             commentBut.onclick = function(){
                                 var commVal = document.getElementById("cmt").value;

@@ -22,4 +22,10 @@ if($_POST['method'] == "update"){
     update_comment();
 }
 
+if($_POST['method'] == "favourite"){
+    favourite();
+}
+
+
+
 ?>

@@ -88,4 +88,14 @@ function display_search(){
     $result = $db->query($query);
     echo json_encode($result->fetchAll());
 }
+
+function load_favourites(){
+     global $db;
+    $user_id = $_POST['userId'];
+    //$query = "SELECT * FROM favourites WHERE user_id = '".$_POST['userId']."'"; 
+    $query = "SELECT * FROM favourites INNER JOIN images ON favourites.image_id = images.id WHERE favourites.user_id = '$user_id'";
+    $result = $db->query($query);
+    echo json_encode($result->fetchAll());
+}
+
 ?>

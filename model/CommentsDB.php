@@ -45,4 +45,11 @@ function update_comment(){
     echo json_encode($result);
 }
 
+function favourite(){
+    global $db;
+    $query = "INSERT INTO `truckpool`.`favourites` (`user_id`, `image_id`) VALUES ( '".$_POST['userId']."', '".$_POST['imageId']."')";
+    $result = $db->query($query);
+}
+
+
 ?>
