@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.10
+-- version 4.2.7
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: May 13, 2016 at 07:20 AM
--- Server version: 5.5.42
--- PHP Version: 7.0.0
+-- Host: localhost:3306
+-- Generation Time: May 19, 2016 at 07:40 PM
+-- Server version: 5.5.41-log
+-- PHP Version: 5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,10 +14,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
--- Database: `finalproject`
+-- Database: `truckpool`
 --
 
 -- --------------------------------------------------------
@@ -26,12 +26,12 @@ SET time_zone = "+00:00";
 -- Table structure for table `comments`
 --
 
-CREATE TABLE `comments` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `comments` (
+`id` int(11) NOT NULL,
   `text` varchar(100) NOT NULL,
   `user_id` int(11) NOT NULL,
   `image_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
 -- Dumping data for table `comments`
@@ -66,11 +66,11 @@ INSERT INTO `comments` (`id`, `text`, `user_id`, `image_id`) VALUES
 -- Table structure for table `favourites`
 --
 
-CREATE TABLE `favourites` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `favourites` (
+`id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `image_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -78,41 +78,42 @@ CREATE TABLE `favourites` (
 -- Table structure for table `images`
 --
 
-CREATE TABLE `images` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `images` (
+`id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
   `description` varchar(400) NOT NULL,
+  `Category` varchar(300) NOT NULL,
   `path` varchar(500) NOT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
 
 --
 -- Dumping data for table `images`
 --
 
-INSERT INTO `images` (`id`, `title`, `description`, `path`, `user_id`) VALUES
-(9, 'dsfsd', 'dsfdfs', '../img/1/164b7aea572ef39ec8fb.jpg', 1),
-(10, 'FHJKAH', 'djhkajkd', '../img/2/b06b749ea945dfafe0a6.jpg', 2),
-(11, 'DDA', 'ADAD', '../img/2/c811a45a7944d6241663.jpg', 2),
-(12, 'FAHkjjjjjjjjj', 'jjjjjjjjj', '../img/2/4f3f1c07dcb64f21000b.jpg', 2),
-(25, 'Stevie Wonder', 'Stevie Wonderful', '../img/3/83d6a97fe7c64b7e4238.jpg', 3),
-(27, 'Mr. Bean', 'Could it be?', '../img/4/e1f1c2e6b144b33e62bd.jpg', 4),
-(29, 'Fire', 'Swag', '../img/4/f992d8e6f1f18b30150f.jpg', 4),
-(31, 'LOLOLOL', 'Keeeee-yute', '../img/4/e77a45313a71abbe522f.jpg', 4),
-(32, 'Willie Wonka', 'So true', '../img/4/0769c7447cbafc457c7e.jpg', 4),
-(34, 'VERY NICE', 'Descriiiption', '../img/7/220eece9a07aa16c20bc.jpg', 7);
+INSERT INTO `images` (`id`, `title`, `description`, `Category`, `path`, `user_id`) VALUES
+(9, 'dsfsd', 'dsfdfs', 'Small', '../img/1/164b7aea572ef39ec8fb.jpg', 1),
+(10, 'FHJKAH', 'djhkajkd', 'Small', '../img/2/b06b749ea945dfafe0a6.jpg', 2),
+(11, 'DDA', 'ADAD', 'Medium', '../img/2/c811a45a7944d6241663.jpg', 2),
+(12, 'FAHkjjjjjjjjj', 'jjjjjjjjj', 'Medium', '../img/2/4f3f1c07dcb64f21000b.jpg', 2),
+(25, 'Stevie Wonder', 'Stevie Wonderful', 'Medium', '../img/3/83d6a97fe7c64b7e4238.jpg', 3),
+(27, 'Mr. Bean', 'Could it be?', 'Large', '../img/4/e1f1c2e6b144b33e62bd.jpg', 4),
+(29, 'Fire', 'Swag', 'Large', '../img/4/f992d8e6f1f18b30150f.jpg', 4),
+(31, 'LOLOLOL', 'Keeeee-yute', '', '../img/4/e77a45313a71abbe522f.jpg', 4),
+(32, 'Willie Wonka', 'So true', '', '../img/4/0769c7447cbafc457c7e.jpg', 4),
+(34, 'VERY NICE', 'Descriiiption', '', '../img/7/220eece9a07aa16c20bc.jpg', 7);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `savedComments`
+-- Table structure for table `savedcomments`
 --
 
-CREATE TABLE `savedComments` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `savedcomments` (
+`id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `comment_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -120,11 +121,11 @@ CREATE TABLE `savedComments` (
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+`id` int(11) NOT NULL,
   `username` varchar(200) NOT NULL,
   `password` varchar(400) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `users`
@@ -138,7 +139,8 @@ INSERT INTO `users` (`id`, `username`, `password`) VALUES
 (5, 'Alex', 'Alex'),
 (6, 'Alexis', 'Alexis'),
 (7, '123', '123'),
-(8, 'abb', 'abb');
+(8, 'abb', 'abb'),
+(9, 'aaa', '123');
 
 --
 -- Indexes for dumped tables
@@ -148,42 +150,31 @@ INSERT INTO `users` (`id`, `username`, `password`) VALUES
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `image_id` (`image_id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `user_id` (`user_id`), ADD KEY `image_id` (`image_id`);
 
 --
 -- Indexes for table `favourites`
 --
 ALTER TABLE `favourites`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `image_id` (`image_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `image_id_2` (`image_id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `image_id` (`image_id`), ADD KEY `user_id` (`user_id`), ADD KEY `image_id_2` (`image_id`);
 
 --
 -- Indexes for table `images`
 --
 ALTER TABLE `images`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `title` (`title`),
-  ADD KEY `user_id` (`user_id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `title` (`title`), ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `savedComments`
+-- Indexes for table `savedcomments`
 --
-ALTER TABLE `savedComments`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `comment_id` (`comment_id`);
+ALTER TABLE `savedcomments`
+ ADD PRIMARY KEY (`id`), ADD KEY `user_id` (`user_id`), ADD KEY `comment_id` (`comment_id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `username` (`username`),
-  ADD KEY `password` (`password`);
+ ADD PRIMARY KEY (`id`), ADD KEY `username` (`username`), ADD KEY `password` (`password`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -193,27 +184,27 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `favourites`
 --
 ALTER TABLE `favourites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
 --
--- AUTO_INCREMENT for table `savedComments`
+-- AUTO_INCREMENT for table `savedcomments`
 --
-ALTER TABLE `savedComments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `savedcomments`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- Constraints for dumped tables
 --
@@ -222,21 +213,21 @@ ALTER TABLE `users`
 -- Constraints for table `comments`
 --
 ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `favourites`
 --
 ALTER TABLE `favourites`
-  ADD CONSTRAINT `favourites_ibfk_2` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `favourites_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `favourites_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `favourites_ibfk_2` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `images`
 --
 ALTER TABLE `images`
-  ADD CONSTRAINT `images_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `images_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

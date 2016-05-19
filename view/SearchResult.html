@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Alexis Final Project</title>
+    <meta charset="utf-8"/>
+      <link href="../css/Alexis_Main_CSS.css" rel="stylesheet" type="text/css">
+      <style>
+          #h2{
+            text-align: center;
+            font-family:"Helvetica Neue", Gotham, Helvetica, Arial, sans-serif; 
+          }
+            
+          body {
+            text-align: center;
+          }
+      </style>
+    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<body>
+<h3>Search Results:</h3>
+<div id = "display"></div>
+<script>
+$(document).ready(function(){
+    var id = localStorage.getItem("adId");
+    console.log(localStorage.getItem("searchOp"));
+    var option = localStorage.getItem("searchOp"); 
+    $.ajax({
+                url:"../controller/ImageCont.php",
+                dataType:"json",
+                type:"POST",
+                data:{
+                    method:"search",
+                    category: option
+                },
+                success:function(resp){
+                    console.log(resp);
+                        for(var i = 0; i<resp.length;i++){
+                        var img = document.createElement("img");
+                        img.src = resp[i].path;
+                        img.style.height = "150px";
+                        img.style.width = "auto";
+                        var div = document.createElement("div");
+                        div.style.border = "solid";
+                        div.style.width = "500px";
+                        div.style.marginBottom = "10px";
+                        div.style.padding = "10px";
+                        div.style.marginRight = "auto";
+                        div.style.marginLeft = "auto";
+                        div.style.textAlign = "center";
+                        document.getElementById("display").appendChild(div);
+                        
+                        
+                        
+                        var h = document.createElement("h2");
+                        h.innerHTML = resp[i].title;
+                        console.log(resp[i].title);
+                        
+                        div.appendChild(h);
+                        div.appendChild(img);
+                
+                        var brk = document.createElement("br");
+                        div.appendChild(brk);
+             
+                        
+                        var DisplayDiv = document.createElement("div");
+                        DisplayDiv.setAttribute("id", "DisplayDivComment" + resp[i].id);
+                        div.appendChild(DisplayDiv);
+                        
+                        
+                        var see = document.createElement("button");
+                        see.innerHTML = "View Entire Ad";
+                        div.appendChild(see);
+                         see.id = resp[i].id;
+                        
+                        see.onclick = function(){
+                           
+                          var seeId = this.id;
+                            console.log(seeId);
+                            localStorage.setItem("adId", seeId);
+                            location.href = "SingleItem.html";
+                        }
+                
+                    }
+                  
+                     }
+                
+    });
+});
+ 
+ 
+
+</script>
+    
+</body>
+</html>

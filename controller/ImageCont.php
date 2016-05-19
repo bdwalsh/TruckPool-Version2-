@@ -37,4 +37,7 @@ if($_POST['method'] == "single_ad"){
     display_single_ad();
 }
 
+if($_POST['method'] == "search"){
+    display_search();
+}
 ?>

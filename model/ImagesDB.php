@@ -81,4 +81,11 @@ function display_single_ad(){
     echo json_encode($result->fetchAll());
     
 }
+
+function display_search(){
+    global $db;
+    $query = "SELECT * FROM images WHERE Category = '".$_POST['category']."'"; 
+    $result = $db->query($query);
+    echo json_encode($result->fetchAll());
+}
 ?>
