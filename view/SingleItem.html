@@ -148,15 +148,15 @@ $(document).ready(function(){
                                 showBut.onclick = function(){
                                      $.ajax({
                                         url:"../controller/CommentCont.php",
-                                        dataType:"html",
+                                        dataType:"json",
                                         type:"POST",
                                         data:{
                                             method:"display",
                                             imageId: id
                                         },
                                         success:function(resp){
-                                            console.log(JSON.parse(resp));
-                                            var gallery2 = JSON.parse(resp);
+                                            console.log(resp);
+                                            var gallery2 = resp;
                                             for(var i = 0; i<gallery2.length;i++){
                                                 
                                                 var userLink = document.createElement("a");
@@ -185,7 +185,7 @@ $(document).ready(function(){
                                                 newdiv.appendChild(save);
                                                 
                                                 
-                                                save.id = gallery2[i].id;
+                                                save.id = gallery2[i][0];
                                         
                                                 save.onclick = function(){
                                                     

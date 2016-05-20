@@ -60,6 +60,7 @@ function save(){
 
 function display_saved(){
     global $db;
+    $id  = $_POST['user'];
     $query = "SELECT comments.text
     FROM comments 
     INNER JOIN savedcomments
@@ -68,5 +69,6 @@ function display_saved(){
     $result = $db->query($query);
     echo json_encode($result->fetchAll());
 }
+
 
 ?>
