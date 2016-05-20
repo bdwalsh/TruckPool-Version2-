@@ -45,14 +45,13 @@
             alert("Welcome " + localStorage.getItem("user_username") + "!");
             $.ajax({
                 url:"../controller/ImageCont.php",
-                dataType:"html",
+                dataType:"json",
                 type:"POST",
                 data:{
                     method:"display_all",
                 },
                 success:function(resp){
-                    console.log(JSON.parse(resp));
-                    var gallery = JSON.parse(resp);
+                    var gallery = resp;
                     for(var i = 0; i<gallery.length;i++){
                         var img = document.createElement("img");
                         img.src = gallery[i].path;

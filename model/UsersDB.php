@@ -20,7 +20,7 @@ function get_user(){
 function update_user(){
     global $db;
     
-    $query = "UPDATE `finalproject`.`users` SET `password` = '".$_POST['password']."' WHERE `users`.`id` = 1;";
+    $query = "UPDATE `truckpool`.`users` SET `password` = '".$_POST['password']."' WHERE `users`.`id` = 1;";
     $result = $db->query($query);
 }
 
