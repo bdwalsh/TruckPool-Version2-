@@ -1,7 +1,7 @@
 <?php
 
 try {
-    $db = new PDO("mysql:dbname=truckpool;host=localhost", "root", "root");
+    $db = new PDO("mysql:dbname=truckpool-new;host=localhost", "root", "password");
 } catch (PDOException $e) {
     echo "FAIL";
 }

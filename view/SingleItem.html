@@ -20,7 +20,7 @@
 
             #save {
                 background-color: #13293D;
-                width: 70px;
+                width: 100px;
                 height: 50px;
                 margin-left: 3px;
 
@@ -95,12 +95,6 @@ $(document).ready(function(){
                             fav.innerHTML = "Favourite this post!";
                             div.appendChild(fav);
                          
-                            
-                            var save = document.createElement("button");
-                            save.innerHTML = "Save this post!";
-                            save.id = "save";
-                            div.appendChild(save);
-                            
                             fav.onclick = function() {
                                 alert("favourited");
                                 console.log(this.id);
@@ -118,7 +112,7 @@ $(document).ready(function(){
                                         },
                                         success:function(resp){
                                             console.log(resp);
-                                            alert("Comment successfully favourited!");
+                                            //alert("Comment successfully favourited!");
                                             //location.reload();
                                             }
                                         });
@@ -163,13 +157,50 @@ $(document).ready(function(){
                                             console.log(JSON.parse(resp));
                                             var gallery2 = JSON.parse(resp);
                                             for(var i = 0; i<gallery2.length;i++){
-
+                                                var newdiv = document.createElement("div");
+                                                div.appendChild(newdiv);
                                                 var pComment = document.createElement("p");
                                                 pComment.innerHTML = gallery2[i].text;
-                                                div.appendChild(pComment);
-
+                                               
+                                                newdiv.appendChild(pComment);
+                                                newdiv.style.border = "solid";
+                                                newdiv.style.padding = "4px";
+                                                newdiv.style.marginBottom = "4px";
+                                                var save = document.createElement("button");
+                                                save.innerHTML = "Save this comment!";
+                                               // save.id = "save";
+                                                newdiv.appendChild(save);
+                                                
+                                                
+                                                save.id = gallery2[i].id;
+                                        
+                                                save.onclick = function(){
+                                                    
+                                                    saveId = this.id;
+                                                    
+                                                    console.log(saveId);
+                                                    localStorage.setItem("saved_id", saveId);
+                                                    console.log(saveId);
+                                                     $.ajax({
+                                                        url:"../controller/CommentCont.php",
+                                                        dataType:"html",
+                                                        type:"POST",
+                                                        data:{
+                                                            method:"save",
+                                                            user: localStorage.getItem("user_id"),
+                                                            comment: localStorage.getItem("saved_id"),
+                                                        },
+                                                        success:function(resp){
+                                                            console.log(resp);
+                                                
+                                                
+                                                }
+                            
+                                                     });
+                                                
 
                                             }
+                                        }
                                         }
                                          
                             });

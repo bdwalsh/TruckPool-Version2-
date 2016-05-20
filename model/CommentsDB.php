@@ -14,7 +14,7 @@ function add_comment(){
 function display_comments(){
     global $db;
     
-    $query = "SELECT text FROM `comments` WHERE image_id = ".$_POST['imageId']."";
+    $query = "SELECT * FROM `comments` WHERE image_id = ".$_POST['imageId']."";
     $result = $db->query($query);
     echo json_encode($result->fetchAll());
 }
@@ -51,5 +51,10 @@ function favourite(){
     $result = $db->query($query);
 }
 
+function save(){
+    global $db;
+    $query = "INSERT INTO `truckpool`.`savedcomments` (`user_id`, `comment_id`) VALUES ( '".$_POST['user']."', '".$_POST['comment']."')";
+    $result = $db->query($query);
+}
 
 ?>

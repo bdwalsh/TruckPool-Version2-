@@ -26,6 +26,9 @@ if($_POST['method'] == "favourite"){
     favourite();
 }
 
+if($_POST['method'] == "save"){
+    save();
+}
 
 
 ?>

@@ -12,7 +12,54 @@
 </body>
     
 <script>
-    var deleteComment = function(id){
+    
+    $(document).ready(function(){
+                $.ajax({
+                    url:"../controller/CommentCont.php",
+                    dataType:"html",
+                    type:"POST",
+                    data:{
+                        method:"display_comments",
+                        userId: localStorage.getItem("user_id")
+                        
+                    },
+                    success:function(resp){
+                        console.log(JSON.parse(resp));
+                        var gallery = JSON.parse(resp);
+                        for(var i = 0; i<gallery.length;i++){
+                            var div = document.createElement("div");
+                            document.getElementById("display").appendChild(div);
+                            
+                            var pUserComment = document.createElement("p");
+                            pUserComment.innerHTML = gallery[i].text;
+                            console.log(gallery[i].text);
+                            div.appendChild(pUserComment);
+                            
+                            var editComment = document.createElement("input");
+                            editComment.placeholder = "Edit your comment";
+                            editComment.setAttribute("id", "EditCommentInput" + gallery[i].id);
+                            div.appendChild(editComment);
+                            
+                            var updateCommentButton = document.createElement("button");
+                            updateCommentButton.innerHTML = "Update";
+                            updateCommentButton.setAttribute("onclick","updateComment("+gallery[i].id+")");
+                            //updateDescriptionButton.setAttribute("id", "UpdateDescriptionBut");
+                            div.appendChild(updateCommentButton);
+                            
+                            var deleteButton = document.createElement("button");
+                            deleteButton.innerHTML = "Delete";
+                            deleteButton.setAttribute("id", "DeleteBut");
+                            deleteButton.setAttribute("onclick","deleteComment("+gallery[i].id+")");
+                            div.appendChild(deleteButton);
+                        }
+                    }
+                });
+           
+            
+        });
+    
+    
+       var deleteComment = function(id){
                                 console.log(id);
                                 
                             $.ajax({
@@ -54,49 +101,6 @@
             
             
                             }
-    
-    $(document).ready(function(){
-                $.ajax({
-                    url:"../controller/CommentCont.php",
-                    dataType:"html",
-                    type:"POST",
-                    data:{
-                        method:"display_comments",
-                        userId: localStorage.getItem("user_id")
-                        
-                    },
-                    success:function(resp){
-                        console.log(JSON.parse(resp));
-                        var gallery = JSON.parse(resp);
-                        for(var i = 0; i<gallery.length;i++){
-                        
-                            var pUserComment = document.createElement("p");
-                            pUserComment.innerHTML = gallery[i].text;
-                            console.log(gallery[i].text);
-                            document.getElementById("display").appendChild(pUserComment);
-                            
-                            var editComment = document.createElement("input");
-                            editComment.placeholder = "Edit your comment";
-                            editComment.setAttribute("id", "EditCommentInput" + gallery[i].id);
-                            document.getElementById("display").appendChild(editComment);
-                            
-                            var updateCommentButton = document.createElement("button");
-                            updateCommentButton.innerHTML = "Update";
-                            updateCommentButton.setAttribute("onclick","updateComment("+gallery[i].id+")");
-                            //updateDescriptionButton.setAttribute("id", "UpdateDescriptionBut");
-                            document.getElementById("display").appendChild(updateCommentButton);
-                            
-                            var deleteButton = document.createElement("button");
-                            deleteButton.innerHTML = "Delete";
-                            deleteButton.setAttribute("id", "DeleteBut");
-                            deleteButton.setAttribute("onclick","deleteComment("+gallery[i].id+")");
-                            document.getElementById("display").appendChild(deleteButton);
-                        }
-                    }
-                });
-           
-            
-        });
 </script>
     
 </html>
