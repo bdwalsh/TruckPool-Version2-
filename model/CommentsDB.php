@@ -57,4 +57,15 @@ function save(){
     $result = $db->query($query);
 }
 
+function display_saved(){
+    global $db;
+    $query = "SELECT comments.text
+    FROM comments 
+    INNER JOIN savedcomments
+    ON savedcomments.comment_id = comments.id
+    WHERE savedcomments.user_id = '".$_POST['user']."'";
+    $result = $db->query($query);
+    echo json_encode($result->fetchAll());
+}
+
 ?>

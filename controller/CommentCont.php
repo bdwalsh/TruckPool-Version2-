@@ -30,5 +30,8 @@ if($_POST['method'] == "save"){
     save();
 }
 
+if($_POST['method'] == "display_saved"){
+    display_saved();
+}
 
 ?>

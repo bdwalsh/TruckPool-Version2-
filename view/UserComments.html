@@ -26,9 +26,15 @@
                     success:function(resp){
                         console.log(JSON.parse(resp));
                         var gallery = JSON.parse(resp);
+                          var h3 = document.createElement("h3");
+                          document.getElementById("display").appendChild(h3);
+                          h3.innerHTML = "Your Comments:";
                         for(var i = 0; i<gallery.length;i++){
                             var div = document.createElement("div");
+                            div.style.border = "solid";
+                            div.style.width = "375px";
                             document.getElementById("display").appendChild(div);
+                            
                             
                             var pUserComment = document.createElement("p");
                             pUserComment.innerHTML = gallery[i].text;
@@ -51,14 +57,44 @@
                             deleteButton.setAttribute("id", "DeleteBut");
                             deleteButton.setAttribute("onclick","deleteComment("+gallery[i].id+")");
                             div.appendChild(deleteButton);
+                            
+                            var br = document.createElement("br");
+                            document.getElementById("display").appendChild(br);
                         }
                     }
                 });
-           
-            
+        
+        
+                $.ajax({
+                    url:"../controller/CommentCont.php",
+                    dataType:"json",
+                    type:"POST",
+                    data:{
+                        method:"display_saved",
+                        user: localStorage.getItem("user_id")
+                        
+                    },
+                    success:function(resp){
+                        console.log(resp);
+                          var h3 = document.createElement("h3");
+                          document.getElementById("display").appendChild(h3);
+                          h3.innerHTML = "Your Saved Comments:";
+                        
+                        for(var i = 0; i<resp.length;i++){
+                            var div = document.createElement("div");
+                            var p = document.createElement("p");
+                            p.innerHTML = resp[i].text;
+                            
+                            div.style.border = "solid";
+                            div.style.width = "375px";
+                            document.getElementById("display").appendChild(div);  
+                            div.appendChild(p);
+                    }
+                }
+                    
         });
     
-    
+    });
        var deleteComment = function(id){
                                 console.log(id);
                                 

@@ -48,6 +48,7 @@ $(document).ready(function(){
                 success:function(resp){
                     console.log(resp);
                      for(var i = 0; i<resp.length; i++){
+                       
                     var imgs = document.createElement("img");
                             imgs.src = resp[i].path;
                             imgs.style.height = "150px";
