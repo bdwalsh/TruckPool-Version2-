@@ -26,7 +26,7 @@
     <a href="Favourites.html">Your Favourites</a>
     <a href="../index.html">Logout</a>
     
-    <select>
+    <select id="selectedOp">
         <option value="small">Small</option>
         <option value="medium">Medium</option>
         <option value="large">Large</option>
@@ -157,7 +157,6 @@
                             });
                         }
          var search = document.getElementById("search");
-
          search.onclick = function(){
             location.href = "SearchResult.html";
             var size = document.getElementById("selectedOp").value;
