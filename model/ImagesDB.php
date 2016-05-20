@@ -5,7 +5,7 @@ function add_image($path){
     global $db;
     echo $_POST['user_id'];
     echo $path;
-    $query = "INSERT INTO `finalproject`.`images` (`id`, `title`, `description`, `path`, `user_id`) VALUES (NULL, '".$_POST['title']."', '".$_POST['description']."', '".$path."', '".$_POST['user_id']."')";
+    $query = "INSERT INTO `truckpool`.`images` (`id`, `title`, `description`, `path`, `user_id`) VALUES (NULL, '".$_POST['title']."', '".$_POST['description']."', '".$path."', '".$_POST['user_id']."')";
     echo $query;
     $result = $db->query($query);
 }
@@ -45,7 +45,7 @@ function display_all_images(){
 function update_title(){
     global $db;
     
-    $query = "UPDATE `finalproject`.`images` SET `title` = '".$_POST['title']."' WHERE `images`.`id` = '".$_POST['imageId']."';";
+    $query = "UPDATE `truckpool`.`images` SET `title` = '".$_POST['title']."' WHERE `images`.`id` = '".$_POST['imageId']."';";
     $result = count($db->query($query));
     echo json_encode($result);
 }
@@ -53,7 +53,7 @@ function update_title(){
 function update_description(){
     global $db;
     
-    $query = "UPDATE `finalproject`.`images` SET `description` = '".$_POST['description']."' WHERE `images`.`id` = '".$_POST['imageId']."';";
+    $query = "UPDATE `truckpool`.`images` SET `description` = '".$_POST['description']."' WHERE `images`.`id` = '".$_POST['imageId']."';";
     $result = count($db->query($query));
     echo json_encode($result);
 }
