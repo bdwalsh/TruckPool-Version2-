@@ -5,7 +5,7 @@ function add_image($path){
     global $db;
     echo $_POST['user_id'];
     echo $path;
-    $query = "INSERT INTO `truckpool`.`images` (`id`, `title`, `description`, `path`, `user_id`) VALUES (NULL, '".$_POST['title']."', '".$_POST['description']."', '".$path."', '".$_POST['user_id']."')";
+    $query = "INSERT INTO `truckpool`.`images` (`id`, `title`, `description`,`Category`, `path`, `user_id`) VALUES (NULL, '".$_POST['title']."', '".$_POST['description']."','".$_POST['Category']."', '".$path."', '".$_POST['user_id']."')";
     echo $query;
     $result = $db->query($query);
 }
