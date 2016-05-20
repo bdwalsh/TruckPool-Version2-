@@ -12,4 +12,8 @@ if($_POST['method'] == "login"){
 if($_POST['method'] == "update"){
     update_user();
 }
+
+if($_POST['method'] == "getOther"){
+    get_other_user();
+}
 ?>

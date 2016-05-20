@@ -158,11 +158,23 @@ $(document).ready(function(){
                                             console.log(JSON.parse(resp));
                                             var gallery2 = JSON.parse(resp);
                                             for(var i = 0; i<gallery2.length;i++){
+                                                
+                                                var userLink = document.createElement("a");
+                                                userLink.href = "./OtherProfile.html";
+                                                userLink.id = gallery2[i].id;
+                                                userLink.onclick = function(){
+                                                localStorage.setItem("otherProfId", this.id);
+                                
+                                                }
+                                                userLink.innerHTML = gallery2[i].username;
+                                                
                                                 var newdiv = document.createElement("div");
+                                                
                                                 div.appendChild(newdiv);
                                                 var pComment = document.createElement("p");
                                                 pComment.innerHTML = gallery2[i].text;
                                                
+                                                newdiv.appendChild(userLink);
                                                 newdiv.appendChild(pComment);
                                                 newdiv.style.border = "solid";
                                                 newdiv.style.padding = "4px";

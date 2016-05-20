@@ -27,4 +27,13 @@ function update_user(){
 function delete_user(){
 }
 
+function get_other_user(){
+    global $db;
+    
+    $query = "SELECT * FROM users WHERE id = '".$_POST['user_id']."'";
+    $result = $db->query($query);
+    
+    echo json_encode($result->fetchAll());
+}
+
 ?>

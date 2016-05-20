@@ -14,7 +14,8 @@ function add_comment(){
 function display_comments(){
     global $db;
     
-    $query = "SELECT * FROM `comments` WHERE image_id = ".$_POST['imageId']."";
+    //$query = "SELECT * FROM `comments` WHERE image_id = ".$_POST['imageId']."";
+    $query = "SELECT * FROM comments INNER JOIN users ON comments.user_id = users.id WHERE image_id = ".$_POST['imageId']."";
     $result = $db->query($query);
     echo json_encode($result->fetchAll());
 }
@@ -39,7 +40,7 @@ function delete_comment(){
 function update_comment(){
     global $db;
     echo "word";
-    $query = "UPDATE `finalproject`.`comments` SET `text` = '".$_POST['text']."' WHERE `comments`.`id` = '".$_POST['commentId']."';";
+    $query = "UPDATE `truckpool`.`comments` SET `text` = '".$_POST['text']."' WHERE `comments`.`id` = '".$_POST['commentId']."';";
     $result = count($db->query($query));
     echo $query;
     echo json_encode($result);
