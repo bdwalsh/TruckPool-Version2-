@@ -17,13 +17,15 @@
     </head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <body>
-<h3>Search Results:</h3>
 <div id = "display"></div>
 <script>
 $(document).ready(function(){
     var id = localStorage.getItem("adId");
     console.log(localStorage.getItem("searchOp"));
-    var option = localStorage.getItem("searchOp"); 
+    var option = localStorage.getItem("searchOp");
+    var resultTitle = document.createElement("h3");
+    resultTitle.innerHTML = "Search Result: "  + option;
+    $('body').prepend(resultTitle);
     $.ajax({
                 url:"../controller/ImageCont.php",
                 dataType:"json",
